@@ -1,0 +1,38 @@
+[
+   {
+       "from": "index.html",
+       "to": "index.html"
+   },
+   {
+       "from": "",
+       "to": "index.html"
+   },
+   {
+       "to": "style/*",
+       "from": "style/*"
+   },
+   {
+       "to": "fonts/*",
+       "from": "fonts/*"
+   },
+   {
+       "to": "css/*",
+       "from": "css/*"
+   },
+   {
+       "to": "img/*",
+       "from": "img/*"
+   },
+   {
+       "to": "js/*",
+       "from": "js/*"
+   },
+   {
+       "to": "backbone.marionette/*",
+       "from": "backbone.marionette/*"
+   },
+   {
+       "to": "../../*",
+       "from": ":db/*"
+   }
+]

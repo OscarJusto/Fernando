@@ -1,0 +1,14 @@
+/* add styles here */
+.form-group .btn,
+.form-group .btn-group {margin:15px 0;}
+#main .nav-pills li {border:1px solid #428bca;border-radius:6px;}
+#main .nav-pills li {margin:5px;padding:2px;}
+#main .nav-tabs {margin-top:15px;}
+#operaciones .panel-heading {padding:10px 15px 0;border-bottom: 1px solid #428bca;}
+#content .panel-heading .btn-toolbar {padding:5px 15px 15px;}
+#main .tab-content {padding:10px;border:1px solid #ddd;border-top:0;background-color:#eee;}
+#main .jumbotron img {margin:0 auto;}
+#content .nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {background-color:#428bca;color:#fff;}
+#nav-registro-form th,
+#nav-registro-form input {font-size: 12px;}
+#nav-registro-form .form-control {padding: 5px 5px;}

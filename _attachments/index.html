@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Fernando</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link rel="shortcut icon" href="./img/rob.jpg">
+        <link rel="stylesheet" href="./css/bootstrap.min.css">
+        <link rel="stylesheet" href="./style/main.css">
+    </head>
+    <body class="container">
+        <nav id="nav" class="navbar navbar-default" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Fernando</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul id="nav-menu" class="nav navbar-nav"></ul>
+            <form id="nav-actions" class="navbar-form navbar-right"></form>
+        </div>
+        </nav>
+        <div id="main" class="container-fluid">
+            <div class="row">
+                <div class="col-sm-6 col-md-6">
+                </div>
+                <div class="col-sm-6 col-md-6">
+                </div>
+            </div>
+        </div>
+    </body>
+    <script id="template-nav-logged-out" type="text/x-template">
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="Nombre de usuario..." required autofocus>
+        </div>
+        <div class="form-group">
+            <input type="password" class="form-control" placeholder="Contraseña..." required>
+        </div>
+        <!--div class="checkbox">
+            <label>
+                <input type="checkbox" value="remember-me"> Remember me
+            </label>
+        </div-->
+        <button class="btn btn-primary" type="submit">Ingresar <span class="glyphicon glyphicon-user"></span></button>
+    </script>
+    <script id="template-nav-logged-in-admin" type="text/x-template">
+        <a href="#editar/granjas" class="btn btn-info boton-agregar hide" role="button">Añadir granja al sistema <span class="glyphicon glyphicon-plus"></span></a>
+        <a href="#" class="hide btn btn-info boton-sensores" role="button">Sensores <span class="glyphicon glyphicon-info-sign"></span></a>
+        <a href="#" class="hide btn btn-info boton-motores" role="button">Motores <span class="glyphicon glyphicon-play"></span>/<span class="glyphicon glyphicon-stop"></span></a>
+        <button class="btn btn-danger boton-salir" type="submit">Salir <span class="glyphicon glyphicon-user"></span></button>
+    </script>
+    <script id="template-nav-logged-in" type="text/x-template">
+        <button class="btn btn-danger boton-salir" type="submit">Salir <span class="glyphicon glyphicon-user"></span></button>
+    </script>
+    <script id="template-nav-menu-admin" type="text/x-template">
+        <li><a href="#domotica">Domótica</a></li>
+        <li><a href="#vivienda">Vivienda</a></li>
+        <li><a href="#demanda">Demanda energética</a></li>
+        <li><a href="#wsan">WSAN</a></li>
+        <li><a href="#exergia">Exergía</a></li>
+    </script>
+    <script id="template-nav-menu" type="text/x-template">
+        <li<a href="#domotica">Domótica</a></li>
+        <li><a href="#vivienda">Vivienda</a></li>
+        <li><a href="#demanda">Demanda energética</a></li>
+        <li><a href="#wsan">WSAN</a></li>
+        <li><a href="#exergia">Exergía</a></li>
+    </script>
+    <script id="template-content-logged-out" type="text/x-template">
+        <div class="col-sm-offset-4 col-sm-4 text-center">
+            <div class="row">
+                <div class="jumbotron text-center">
+                    <p><img class="img-responsive" src="./img/domo.jpg" width="250"></p>
+                    <p>Sistema de monitoreo y control energético de viviendas.</p>
+                </div>
+            </div>
+        </div>
+    </script>
+    <script id="template-navbar" type="text/html">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Fernando</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul id="nav-menu" class="nav navbar-nav">
+            </ul>
+            <section id="nav-actions">
+            <form class="navbar-form navbar-right">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Nombre de usuario..." required autofocus>
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" placeholder="Contraseña..." required>
+                </div>
+                <button class="btn btn-primary" type="submit">Ingresar <span class="glyphicon glyphicon-user"></span></button>
+
+            </form>
+            </section>
+        </div>
+    </script>
+    <script id="template-granja-list-item" type="text/x-template">
+        <%= nombre %>
+    </script>
+    <script id="template-granja-list" type="text/x-template">
+        <div class="panel-heading">
+            <h1 class="panel-title"><%= 'Granjas' %></h1>
+        </div>
+        <div class="panel-body">
+            <div id="lista-granjas" class="list-group">
+            </div>
+        </div>
+    </script>
+    <script id="template-admin-user-pill" type="text/x-template">
+        <a href="#granjas/<%= _id %>"><%= nombre %></a>
+    </script>
+    <script id="template-vivienda" type="text/x-template">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <div class="panel-title">
+                        Vivienda
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <p><%= descripcion %></p>
+                        <ul>Ubicacion
+                            <li></li>
+                            <li>Ciudad: <%= ubicacion.ciudad %></li>
+                            <li>Calle: <%= ubicacion.calle %></li>
+                            <li>Número: <%= ubicacion.numero %></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
+    <script id="template-wsan" type="text/x-template">
+    <div class="span6" style="text-align:center">
+    <div class="page-header">        
+            <h1>Red de Sensores y Actuadores WSAN</h1>        
+    </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Temperatura - Humedad -GAS</h3>
+                    </div>
+                    <div class="panel-body">                                          
+                        <div class="row">
+                            <div class="row">
+                                <br>                                
+                            </div>                        
+                            <div class="col-md-6">                                
+                                <div id="hab1" class="panel panel-info">
+                                    <div class="panel-heading">
+                                        <h6 class="panel-title">Hab 1</h6>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="col-sm-6">
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">
+                                                    Temperatura
+                                                </div>
+                                                <div class="panel-body">
+                                                      Dato
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">
+                                                    Humedad
+                                                </div>
+                                                <div class="panel-body">
+                                                      Dato
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="hab2" class="panel panel-info">
+                                    <div class="panel-heading">
+                                        <h6 class="panel-title">Hab 2</h6>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="col-sm-6">
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">
+                                                    Temperatura
+                                                </div>
+                                                <div class="panel-body">
+                                                      Dato
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">
+                                                    Humedad
+                                                </div>
+                                                <div class="panel-body">
+                                                      Dato
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>                                 
+                            </div>                               
+                            <div class="col-md-6">
+                                <div id="hab3" class="panel panel-info">
+                                    <div class="panel-heading">
+                                        <h6 class="panel-title">Hab 3</h6>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="col-sm-6">
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">
+                                                   Temperatura
+                                                </div>
+                                                <div class="panel-body">
+                                                      Dato
+                                                </div>
+                                            </div>
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">
+                                                    Gas LP
+                                                </div>
+                                                <div class="panel-body">
+                                                      Dato
+                                                </div>
+                                            </div>
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">
+                                                    Humo
+                                                </div>
+                                                <div class="panel-body">
+                                                      Dato
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">
+                                                    <h3 class="panel-title">Humedad</h3>
+                                                </div>
+                                                <div class="panel-body">
+                                                      Dato
+                                                </div>
+                                            </div>
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">
+                                                    <h3 class="panel-title">CO</h3>
+                                                </div>
+                                                <div class="panel-body">
+                                                      Dato
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                                                  
+                        </div>   
+                    </div>
+                </div>
+            </div>                    
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Iluminación</h3>
+                    </div>
+                    <div class="panel-body">                                          
+                        <div class="row">
+                            <div class="row">
+                                <br>                                
+                            </div>                        
+                            <div class="col-md-4">                                
+                                <div class="panel panel-info">
+                                    <div class="panel-heading">
+                                        <h6 class="panel-title">Hab 1</h6>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <button type="button" class="btn btn-xs btn-default">Encender</button>                                    
+                                        </div>
+                                        <div class="row">
+                                            <div class="row">
+                                                 <br>                                
+                                            </div>                                                
+                                                <button type="button" class="btn btn-xs btn-default">Apagar</button>
+                                            <hr>                                                
+                                                <p>Estado</p>
+                                        </div>
+                                    </div>
+                                </div>                                
+                            </div>  
+                            <div class="col-md-4">
+                                <div class="panel panel-info">
+                                    <div class="panel-heading">
+                                        <h6 class="panel-title">Hab 2</h6>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <button type="button" class="btn btn-xs btn-default">Encender</button>                                    
+                                        </div>
+                                        <div class="row">
+                                            <div class="row">
+                                                 <br>                                
+                                            </div>                                                
+                                                <button type="button" class="btn btn-xs btn-default">Apagar</button>
+                                            <hr>                                                
+                                                <p>Estado</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>  
+                            <div class="col-md-4">
+                                <div class="panel panel-info">
+                                    <div class="panel-heading">
+                                        <h6 class="panel-title">Hab 3</h6>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <button type="button" class="btn btn-xs btn-default">Encender</button>                                    
+                                        </div>
+                                        <div class="row">
+                                            <div class="row">
+                                                 <br>                                
+                                            </div>                                                
+                                                <button type="button" class="btn btn-xs btn-default">Apagar</button>
+                                            <hr>                                                
+                                                <p>Estado</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">                       
+                                <div class="col-md-3"></div>
+                                <div class="col-md-3">
+                                    <button type="button" class="btn btn-default">ON</button>
+                                </div>
+                                <div class="col-md-3">
+                                    <button type="button" class="btn btn-default">OFF</button>
+                                </div>
+                                <div class="col-md-3"></div>
+                            </div>                         
+                        </div>   
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Clima</h3>
+                    </div>
+                    <div class="panel-body">                                          
+                        <div class="row">
+                            <div class="row">
+                                <br>                                
+                            </div>                        
+                            <div class="col-md-4">                                
+                                <div class="panel panel-info">
+                                    <div class="panel-heading">
+                                        <h6 class="panel-title">Hab 1</h6>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <button type="button" class="btn btn-xs btn-default">Encender</button>                                    
+                                        </div>
+                                        <div class="row">
+                                            <div class="row">
+                                                 <br>                                
+                                            </div>                                                
+                                                <button type="button" class="btn btn-xs btn-default">Apagar</button>
+                                            <hr>                                                
+                                                <p>Estado</p>
+                                        </div>
+                                    </div>
+                                </div>                                
+                            </div>  
+                            <div class="col-md-4">
+                                <div class="panel panel-info">
+                                    <div class="panel-heading">
+                                        <h6 class="panel-title">Hab 2</h6>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <button type="button" class="btn btn-xs btn-default">Encender</button>                                    
+                                        </div>
+                                        <div class="row">
+                                            <div class="row">
+                                                 <br>                                
+                                            </div>                                                
+                                                <button type="button" class="btn btn-xs btn-default">Apagar</button>
+                                            <hr>                                                
+                                                <p>Estado</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>  
+                            <div class="col-md-4">
+                                <div class="panel panel-info">
+                                    <div class="panel-heading">
+                                        <h6 class="panel-title">Hab 3</h6>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <button type="button" class="btn btn-xs btn-default">Encender</button>                                    
+                                        </div>
+                                        <div class="row">
+                                            <div class="row">
+                                                 <br>                                
+                                            </div>                                                
+                                                <button type="button" class="btn btn-xs btn-default">Apagar</button>
+                                            <hr>                                                
+                                                <p>Estado</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">                       
+                                <div class="col-md-3"></div>
+                                <div class="col-md-3">
+                                    <button type="button" class="btn btn-default">ON</button>
+                                </div>
+                                <div class="col-md-3">
+                                    <button type="button" class="btn btn-default">OFF</button>
+                                </div>
+                                <div class="col-md-3"></div>
+                            </div>                         
+                        </div>   
+                    </div>
+                </div>
+            </div>            
+        </div>        
+        </div>
+    </script>
+
+    <script src="./backbone.marionette/json2.js"></script>
+    <script src="./backbone.marionette/jquery.js"></script>
+    <script src="./js/jquery-migrate-1.2.1.min.js"></script>
+    <script src="./js/jquery.serializeJSON.min.js"></script>
+    <script src="./js/jquery/jquery-ui-1.10.4.custom.min.js"></script>
+    <script src="/_utils/script/jquery.couch.js"></script>
+    <script src="./backbone.marionette/underscore.js"></script>
+    <script src="./backbone.marionette/backbone.js"></script>
+    <script src="./backbone.marionette/backbone.marionette.min.js"></script>
+    <script src="./js/backbone-couchdb.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+    <script src="./js/autobahn.min.js"></script>
+    <script src="./js/smoothie.js"></script>
+    <script src="./js/TanTan.js"></script>
+    <script src="./js/TanTan.Sync.js"></script>
+    <script src="./js/TanTan.BaseDocs.js"></script>
+    <script src="./js/TanTan.AutoBahn.js"></script>
+    <script src="./js/TanTan.Nav.js"></script>
+    <script src="./js/TanTan.Control.js"></script>
+    <script src="./js/TanTan.Nodos.js"></script>
+    <script src="./js/TanTan.Oper.js"></script>
+    <script src="./js/TanTan.Domotica.js"></script>
+    <script src="./js/TanTan.App1.js"></script>
+</html>

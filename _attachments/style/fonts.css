@@ -1,0 +1,5 @@
+/* add CSS3 fonts here */
+@font-face {
+    font-family: 'teleindicadores';
+    src: url('../fonts/teleindicadores1.ttf');
+}
