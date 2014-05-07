@@ -1,7 +1,7 @@
 /*global TodoMVC */
 'use strict';
 
-TanTan.module('Sync', function (Sync, App, Backbone, Marionette, $, _) {
+Fernando.module('Sync', function (Sync, Fernando, Backbone, Marionette, $, _) {
     Sync.create = function (model, options) {
         console.log('Sync.create', model);
         return $.couch.userDb(function (db) {

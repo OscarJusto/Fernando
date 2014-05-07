@@ -1,7 +1,7 @@
 /*global TodoMVC */
 'use strict';
 
-TanTan.module('Docs', function (Docs, App, Backbone, Marionette, $, _) {
+Fernando.module('Docs', function (Docs, Fernando, Backbone, Marionette, $, _) {
 
     Docs.Vivienda = Backbone.Model.extend({
         defaults: {
@@ -49,23 +49,23 @@ TanTan.module('Docs', function (Docs, App, Backbone, Marionette, $, _) {
 
 });
 
-TanTan.module('Vistas', function (Vistas, App, Backbone, Marionette, $, _) {
+Fernando.module('Vistas', function (Vistas, Fernando, Backbone, Marionette, $, _) {
 
     
     
     Vistas.Vivienda = Marionette.ItemView.extend({
         template: "#template-vivienda",
-        model: App.Docs.Vivienda
+        model: Fernando.Docs.Vivienda
     });
 
     Vistas.Habitacion = Marionette.ItemView.extend({
     template: "#template-habitacion",
-        model: App.Docs.Habitacion
+        model: Fernando.Docs.Habitacion
     });
 
     Vistas.WSAN = Marionette.ItemView.extend({
         template: "#template-wsan",
-        model: App.Docs.WSAN,
+        model: Fernando.Docs.WSAN,
         ui: {
             'hab1': '#hab1',
             'hab2': '#hab2',
@@ -106,33 +106,33 @@ TanTan.module('Vistas', function (Vistas, App, Backbone, Marionette, $, _) {
                 var titulo = controlador.ui.hab3.find('>.panel-heading');
                 console.log('Título HAB 3', titulo.text().trim(), evento.msg);
             }
-            if (!App.request('hasWamp')) {
-                this.listenTo(App.vent, 'wamp:success', function () {
-                    App.execute('subscribeNode', '0013a20040ad6568', habitacionUno);
-                    App.execute('subscribeNode', '0013a20040b13749', habitacionDos);
-                    //App.execute('subscribeNode', '0013a20040b136bc', habitacionTres);
+            if (!Fernando.request('hasWamp')) {
+                this.listenTo(Fernando.vent, 'wamp:success', function () {
+                    Fernando.execute('subscribeNode', '0013a20040ad6568', habitacionUno);
+                    Fernando.execute('subscribeNode', '0013a20040b13749', habitacionDos);
+                    //Fernando.execute('subscribeNode', '0013a20040b136bc', habitacionTres);
                 });
             } else {
-                App.execute('subscribeNode', '0013a20040ad6568', habitacionUno);
-                //App.execute('subscribeNode', '0013a20040b13749', habitacionDos);
-                //App.execute('subscribeNode', '0013a20040b136bc', habitacionTres);
+                Fernando.execute('subscribeNode', '0013a20040ad6568', habitacionUno);
+                //Fernando.execute('subscribeNode', '0013a20040b13749', habitacionDos);
+                //Fernando.execute('subscribeNode', '0013a20040b136bc', habitacionTres);
             }
         },
         onClose: function () {
-            App.execute('unsubscribeNode', '0013a20040ad6568');
-            App.execute('unsubscribeNode', '0013a20040b13749');
-            App.execute('unsubscribeNode', '0013a20040b136bc');
+            Fernando.execute('unsubscribeNode', '0013a20040ad6568');
+            Fernando.execute('unsubscribeNode', '0013a20040b13749');
+            Fernando.execute('unsubscribeNode', '0013a20040b136bc');
         }
     });
 
     Vistas.Nodo = Marionette.ItemView.extend({
         templete: "#template-nodo",
-        model: App.Docs.nodo
+        model: Fernando.Docs.nodo
     });
 
 });
 
-TanTan.module('Domotica', function (Domotica, App, Backbone, Marionette, $, _) {
+Fernando.module('Domotica', function (Domotica, Fernando, Backbone, Marionette, $, _) {
 
     Domotica.Rutas = Marionette.AppRouter.extend({
         appRoutes: {
@@ -172,13 +172,13 @@ TanTan.module('Domotica', function (Domotica, App, Backbone, Marionette, $, _) {
             if (resp) {
                 var username = resp.userCtx.name;
                 if (username) {
-                    var User = new App.Docs.UserDoc({ name: username });
+                    var User = new Fernando.Docs.UserDoc({ name: username });
                     if (resp.userCtx.roles.indexOf('_admin') > -1) {
                         User.is_admin = function () { return true; };
                     }
                     return User
                 } else {
-                    return new App.Docs.UserDoc();
+                    return new Fernando.Docs.UserDoc();
                 }
             }
         },
@@ -187,14 +187,14 @@ TanTan.module('Domotica', function (Domotica, App, Backbone, Marionette, $, _) {
             this.loggedOutContent();
         },
         loggedOutContent: function () {
-            App.main.show(new App.Vistas.LoggedOutContent());
+            Fernando.main.show(new Fernando.Vistas.LoggedOutContent());
         },
         showNavBar: function (user) {
             var controller = this;
             if (!user) {
-                user = new App.Docs.UserDoc();
+                user = new Fernando.Docs.UserDoc();
             }
-            var navbar = new App.Vistas.NavBar({model: user});
+            var navbar = new Fernando.Vistas.NavBar({model: user});
             this.listenTo(navbar, "do:login", function (args) {
                 console.log('controller logging in');
                 controller.doLogin(args);
@@ -203,7 +203,7 @@ TanTan.module('Domotica', function (Domotica, App, Backbone, Marionette, $, _) {
                 console.log('controller logging out');
                 controller.doLogout(args);
             });
-            App.nav.show(navbar);
+            Fernando.nav.show(navbar);
         },
         doLogin: function (args) {
             var controller = this;
@@ -221,11 +221,11 @@ TanTan.module('Domotica', function (Domotica, App, Backbone, Marionette, $, _) {
                 console.log('login successful', usr);
                 usr.fetch({
                     success: function (model, resp, opts) {
-                        App.CurrentUser = model;
+                        Fernando.CurrentUser = model;
                         controller.irDomotica();
                     },
                     error: function (resp) {
-                        App.CurrentUser = null;
+                        Fernando.CurrentUser = null;
                         controller.loggedOut();
                     }
                 });
@@ -234,7 +234,7 @@ TanTan.module('Domotica', function (Domotica, App, Backbone, Marionette, $, _) {
                 console.log('login FAILED');
                 form.trigger('reset');
                 user.trigger('focus');
-                App.CurrentUser = null;
+                Fernando.CurrentUser = null;
                 controller.loggedOut();
             }
             if (user.val() && pwd.val()) {
@@ -253,12 +253,12 @@ TanTan.module('Domotica', function (Domotica, App, Backbone, Marionette, $, _) {
             console.log('app:logout args', args);
             function success_callback (resp) {
                 console.log('logout successful');
-                App.CurrentUser = null;
+                Fernando.CurrentUser = null;
                 controller.loggedOut();
             };
             function error_callback (rstatus, error, reason) {
                 console.log('logout FAILED');
-                App.CurrentUser = null;
+                Fernando.CurrentUser = null;
                 controller.loggedOut();
             }
             $.couch.logout({
@@ -275,12 +275,12 @@ TanTan.module('Domotica', function (Domotica, App, Backbone, Marionette, $, _) {
                     if (user.get('name').length > 0) {
                          user.fetch({
                             success: function (model, resp, opts) {
-                                if (!App.request('hasWamp')) {
-                                    App.execute('connectWamp');
+                                if (!Fernando.request('hasWamp')) {
+                                    Fernando.execute('connectWamp');
                                 }
                                 controller.showNavBar(model);
-                                App.main.close();
-                                //App.main.show(vista);
+                                Fernando.main.close();
+                                //Fernando.main.show(vista);
                             },
                             error: function (resp) {
                                 controller.loggedOut();
@@ -319,18 +319,18 @@ TanTan.module('Domotica', function (Domotica, App, Backbone, Marionette, $, _) {
                         //// AQUI VA EL CODIGO
                         user.fetch({
                             success: function (model, resp, opts) {
-                                if (!App.request('hasWamp')) {
-                                    App.execute('connectWamp');
+                                if (!Fernando.request('hasWamp')) {
+                                    Fernando.execute('connectWamp');
                                 }
                                 controller.showNavBar(model);
-                                var casa = new App.Docs.Vivienda({nombre: 'Vivienda', descripcion: 'Tipo Casa Habitación'});
+                                var casa = new Fernando.Docs.Vivienda({nombre: 'Vivienda', descripcion: 'Tipo Casa Habitación'});
                                 var ubicacion = casa.get('ubicacion', '');
                                 ubicacion.ciudad = "Xalapa, Ver.";
                                 ubicacion.calle = "San Lazaro";
                                 ubicacion.numero = "11";
                                 casa.set('ubicacion', ubicacion);
-                                var casa_vista = new App.Vistas.Vivienda({model: casa});
-                                App.main.show(casa_vista);
+                                var casa_vista = new Fernando.Vistas.Vivienda({model: casa});
+                                Fernando.main.show(casa_vista);
                             },
                             error: function (resp) {
                                 controller.loggedOut();
@@ -354,14 +354,14 @@ TanTan.module('Domotica', function (Domotica, App, Backbone, Marionette, $, _) {
                         //// AQUI VA EL CODIGO
                         user.fetch({
                             success: function (model, resp, opts) {
-                                if (!App.request('hasWamp')) {
-                                    App.execute('connectWamp');
+                                if (!Fernando.request('hasWamp')) {
+                                    Fernando.execute('connectWamp');
                                 }
                                 controller.showNavBar(model);                                
-                                var monitor = new App.Docs.WSAN();
-                                var monitor_vista = new App.Vistas.WSAN({model: monitor});
-                                //App.main.show(casa_vista);
-                                App.main.show(monitor_vista);
+                                var monitor = new Fernando.Docs.WSAN();
+                                var monitor_vista = new Fernando.Vistas.WSAN({model: monitor});
+                                //Fernando.main.show(casa_vista);
+                                Fernando.main.show(monitor_vista);
                             },
                             error: function (resp) {
                                 controller.loggedOut();
@@ -385,13 +385,13 @@ TanTan.module('Domotica', function (Domotica, App, Backbone, Marionette, $, _) {
                     if (user.get('name').length > 0) {
                         user.fetch({
                             success: function (model, resp, opts) {
-                                if (!App.request('hasWamp')) {
-                                    App.execute('connectWamp');
+                                if (!Fernando.request('hasWamp')) {
+                                    Fernando.execute('connectWamp');
                                 }
                                 controller.showNavBar(model);
-                                var casa = new App.Docs.Vivienda({nombre: 'Mi casa'});
-                                var casa_vista = new App.Vistas.Vivienda({model: casa});
-                                App.main.show(casa_vista);
+                                var casa = new Fernando.Docs.Vivienda({nombre: 'Mi casa'});
+                                var casa_vista = new Fernando.Vistas.Vivienda({model: casa});
+                                Fernando.main.show(casa_vista);
                             },
                             error: function (resp) {
                                 controller.loggedOut();

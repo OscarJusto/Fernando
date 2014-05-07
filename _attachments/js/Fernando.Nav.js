@@ -1,12 +1,12 @@
 /*global TodoMVC */
 'use strict';
 
-TanTan.module('Vistas', function (Vistas, App, Backbone, Marionette, $, _) {
+Fernando.module('Vistas', function (Vistas, Fernando, Backbone, Marionette, $, _) {
 
     Vistas.NavBar = Marionette.Layout.extend({
         template: '#template-navbar',
         className: 'container-fluid',
-        model: App.Docs.UserDoc,
+        model: Fernando.Docs.UserDoc,
         regions: {
             menu: '#nav-menu',
             actions: '#nav-actions'
@@ -92,12 +92,12 @@ TanTan.module('Vistas', function (Vistas, App, Backbone, Marionette, $, _) {
         },
         events: {
             'click @ui.motores': function (e) {
-                App.execute('toggleMotors');
+                Fernando.execute('toggleMotors');
             },
             'click @ui.sensores': function (e) {
-                App.execute('getSensors', function (r) {
+                Fernando.execute('getSensors', function (r) {
                     console.log('getSensors', r);
-                    App.main.currentView.side.currentView.$el.text(JSON.stringify(r));
+                    Fernando.main.currentView.side.currentView.$el.text(JSON.stringify(r));
                 });
             }
         },

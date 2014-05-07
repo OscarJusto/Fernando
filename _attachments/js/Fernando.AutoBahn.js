@@ -1,7 +1,7 @@
 /*global TodoMVC */
 'use strict';
 
-TanTan.module('AutoBahn', function (AutoBahn, App, Backbone, Marionette, $, _) {
+Fernando.module('AutoBahn', function (AutoBahn, Fernando, Backbone, Marionette, $, _) {
 
     var sess;
     var ret;
@@ -12,7 +12,7 @@ TanTan.module('AutoBahn', function (AutoBahn, App, Backbone, Marionette, $, _) {
         var log_line = "AutoBahn Connection success";
         sess = session;
         ab.log(log_line, sess);
-        App.vent.trigger('wamp:success', sess);
+        Fernando.vent.trigger('wamp:success', sess);
         anonLogin();
     }
 
@@ -20,7 +20,7 @@ TanTan.module('AutoBahn', function (AutoBahn, App, Backbone, Marionette, $, _) {
         var log_line = "AutoBahn Connection failed";
         ab.log(log_line, code, reason, detail);
         sess = null;
-        App.vent.trigger('wamp:failure');
+        Fernando.vent.trigger('wamp:failure');
     }
 
     function userLogin (user, pwd) {
@@ -47,66 +47,12 @@ TanTan.module('AutoBahn', function (AutoBahn, App, Backbone, Marionette, $, _) {
         ab.log("perms", JSON.stringify(permissions));
     }
 
-    function getGranjaInfo (resp) {
-        //ab.log('getGranjaInfo', resp);
-        ret = [];
-        if ((resp.rows) && (resp.total_rows > 0)) {
-            _.each(resp.rows, function (row) {
-                ret.push(row.value);
-            });
-            //ab.log("granja info", ret);
-            App.vent.trigger('granjas:info', ret);
-        }
-        return ret;
-    }
-
-    function getGranjasTree (resp) {
-        //ab.log('getGranjaInfo', resp);
-        ret = [];
-        _.each(resp.nodes, function (row) {
-            ret.push(row);
-        });
-        //ab.log("granja TREE", resp);
-        App.vent.trigger('granjas:tree', resp);
-        return ret;
-    }
-
-    function getEstanqueInfo (granja) {
-        sess.call("rpc:estanque-info", granja).always(ab.log);
-    };
-
-    function getUser (resp) {
-        //ab.log('getUser', resp);
-        if ((resp.ok) && (resp.name)) {
-            App.vent.trigger('granjas:user', resp);
-        } else {
-            App.vent.trigger('granjas:anon', resp);
-        }
-    };
-
-    function getEvents (resp) {
-        ret = [];
-        if ((resp.rows) && (resp.total_rows > 0)) {
-            var rows = resp.rows;
-            _.each(rows, function (item) {
-                ab.log('event', item.value);
-                ret.push(item.value);
-            });
-        }
-        ab.log('getEvents', ret);
-        App.vent.trigger('agenda:get-events', ret);
-    };
-
-    function getSession (status) {
-        sess.call("rpc:session-info", status).always(getUser);
-    };
-
     function doLogout (resp) {
         ab.log('logging out', resp);
         if (resp.ok) {
-            App.vent.trigger('granjas:loggedOut', resp);
+            Fernando.vent.trigger('granjas:loggedOut', resp);
         } else {
-            App.vent.trigger('wamp:failure', resp);
+            Fernando.vent.trigger('wamp:failure', resp);
         }
     };
 
@@ -161,9 +107,9 @@ TanTan.module('AutoBahn', function (AutoBahn, App, Backbone, Marionette, $, _) {
     AutoBahn.login = function (creds) {
         function doLogin (resp) {
             if (resp._id) {
-                App.vent.trigger('granjas:loggedIn', resp);
+                Fernando.vent.trigger('fernando:loggedIn', resp);
             } else {
-                App.vent.trigger('granjas:loggedOut', resp);
+                Fernando.vent.trigger('fernando:loggedOut', resp);
             }
         }
         sess.call('rpc:login', creds).always(doLogin);
@@ -171,39 +117,6 @@ TanTan.module('AutoBahn', function (AutoBahn, App, Backbone, Marionette, $, _) {
 
     AutoBahn.logout = function () {
         sess.call('rpc:logout').always(doLogout);
-    };
-
-    AutoBahn.save = function (doc) {
-        sess.call('rpc:save-doc', doc).always(ab.log);
-    };
-
-    AutoBahn.toggle_motors = function () {
-        sess.call("rpc:toggle-power").always(ab.log);
-    }
-
-    AutoBahn.get_pan = function (cb) {
-        if (cb) {
-            sess.call("rpc:get-pan").always(cb);
-        } else {
-            sess.call("rpc:get-pan").always(ab.log);
-        }
-    }
-
-    AutoBahn.get_nodes = function (cb) {
-        if (cb) {
-            sess.call("rpc:get-nodes").always(cb);
-        } else {
-            sess.call("rpc:get-nodes").always(ab.log);
-        }
-    }
-
-    AutoBahn.talk_to = function (node_id, tx_data) {
-        sess.call("rpc:talk-to-node", node_id, tx_data).always(ab.log);
-    };
-
-    AutoBahn.get_events = function () {
-        sess.call('rpc:eventos-info').always(getEvents);
-        return ret;
     };
 
     AutoBahn.sync = function (method, model, options) {
