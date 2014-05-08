@@ -44,22 +44,36 @@ Fernando.module('Vistas', function (Vistas, Fernando, Backbone, Marionette, $, _
             id: 'panel-grafica'
         },
         ui: {
-            canvas: '> .panel-body #grafica'
+            canvas: '> .panel-body #grafica',
+            legend: '> .panel-body #leyenda'
         },
         onRender: function () {
             var graph = new Rickshaw.Graph( {
                 element: this.ui.canvas[0], //document.querySelector("#grafica"), 
                 renderer: 'bar',
                 series: [{
-                    data: [ { x: 0, y: 40 }, { x: 1, y: 49 }, { x: 2, y: 38 }, { x: 3, y: 30 } ],
+                    name: 'Mayo 1 - Mayo 7',
+                    data: [ { x: 0, y: 140 }, { x: 1, y: 149 }, { x: 2, y: 138 }, { x: 3, y: 130 } ],
                     color: 'steelblue'
                 }, {
+                    name: 'Hoy',
                     data: [ { x: 0, y: 20 }, { x: 1, y: 24 }, { x: 2, y: 19 }, { x: 3, y: 15 } ],
                     color: 'lightblue'
                 }]
             });
 
             graph.render();
+
+            var hoverDetail = new Rickshaw.Graph.HoverDetail( {
+                graph: graph,
+                xFormatter: function(x) { return "Línea " + (x+1) },
+                yFormatter: function(y) { return Math.floor(y) + " kW" }
+            } );
+
+            var legend = new Rickshaw.Graph.Legend({
+                graph: graph,
+                element: this.ui.legend[0]
+            });
         }
     });
 
