@@ -176,6 +176,62 @@
             <% }) %>
         </div>
     </script>
+    <script id="template-habitacion-gas" type="text/x-template">
+        <div class="panel-heading">
+            <h6 class="panel-title"><%= nombre %></h6>
+        </div>
+        <div class="panel-body">
+            <div class="col-sm-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Temperatura
+                    </div>
+                    <div class="panel-body">
+                        Dato
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Gas LP
+                    </div>
+                    <div class="panel-body">
+                        Dato
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Humo
+                    </div>
+                    <div class="panel-body">
+                        Dato
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Humedad</h3>
+                    </div>
+                    <div class="panel-body">
+                        Dato
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">CO</h3>
+                    </div>
+                    <div class="panel-body">
+                        Dato
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer">
+            <% _.each(categorias, function (el, idx, list) { %>
+                <span class="label label-success"><%= el %></span>
+            <% }) %>
+        </div>
+    </script>
     <script id="template-habitaciones" type="text/x-template">
         <div class="panel-heading">
             <h3 class="panel-title"><%= nombre %></h3>

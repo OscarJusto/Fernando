@@ -44,12 +44,26 @@ Fernando.module('Vistas', function (Vistas, Fernando, Backbone, Marionette, $, _
         model: Fernando.Docs.Habitacion
     });
 
+    Vistas.HabitacionGas = Marionette.ItemView.extend({
+        template: "#template-habitacion-gas",
+        className: "panel panel-info",
+        model: Fernando.Docs.Habitacion
+    });
+
     Vistas.Habitaciones = Marionette.CompositeView.extend({
         template: "#template-habitaciones",
         className: "panel-group",
         model: Fernando.Docs.Habitacion,
         itemViewContainer: "#lista-habitaciones",
-        itemView: Vistas.HabitacionInfo
+        getItemView: function (item) {
+            var cat = item.get('categorias');
+            console.log('categorias', cat.indexOf('Cocina'));
+            if (cat.indexOf('Cocina') >= 0) {
+                return Vistas.HabitacionGas;
+            } else {
+                return Vistas.HabitacionInfo;
+            }
+        }
     });
 
     Vistas.ViviendaLayout = Marionette.Layout.extend({
