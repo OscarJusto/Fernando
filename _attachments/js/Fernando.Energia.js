@@ -40,6 +40,9 @@ Fernando.module('Vistas', function (Vistas, Fernando, Backbone, Marionette, $, _
     Vistas.MonitoreoGrafica = Marionette.ItemView.extend({
         template: "#template-monitoreo-grafica",
         className: "panel panel-primary",
+        attributes: {
+            id: 'panel-grafica'
+        },
         ui: {
             canvas: '> .panel-body #grafica'
         },
