@@ -105,26 +105,11 @@
             </section>
         </div>
     </script>
-    <script id="template-granja-list-item" type="text/x-template">
-        <%= nombre %>
-    </script>
-    <script id="template-granja-list" type="text/x-template">
-        <div class="panel-heading">
-            <h1 class="panel-title"><%= 'Granjas' %></h1>
-        </div>
-        <div class="panel-body">
-            <div id="lista-granjas" class="list-group">
-            </div>
-        </div>
-    </script>
-    <script id="template-admin-user-pill" type="text/x-template">
-        <a href="#granjas/<%= _id %>"><%= nombre %></a>
-    </script>
     <script id="template-vivienda-layout" type="text/x-template">
         <div class="row">
-            <div id="barra" class="col-sm-3">
+            <div id="barra" class="col-sm-4">
             </div>
-            <div id="contenido" class="col-sm-9">
+            <div id="contenido" class="col-sm-8">
             </div>
         </div>
     </script>
@@ -661,6 +646,45 @@
         </div>        
         </div>
     </script>
+    <script id="template-monitoreo-lineas" type="text/x-template">
+        <div class="panel-heading">
+            <h3 class="panel-title"><%= nombre %></h3>
+        </div>
+        <div class="panel-body">
+            <div id="lista-lineas" class="panel-group">
+            </div>
+        </div>
+    </script>
+    <script id="template-monitoreo-info" type="text/x-template">
+        <div class="panel-heading">
+            <h1 class="panel-title"><%= nombre %></h1>
+        </div>
+        <table class="table table-bordered text-center">
+            <tr>
+                <th>Corriente</th>
+                <th>Voltaje</th>
+                <th>Potencia</th>
+            </tr>
+            <tr>
+                <th>[A]</th>
+                <th>[V]</th>
+                <th>[kW]</th>
+            </tr>
+            <tr>
+                <td>-.-</td>
+                <td>-.-</td>
+                <td>-.-</td>
+            </tr>
+        </table>
+    </script>
+    <script id="template-monitoreo-grafica" type="text/x-template">
+        <div class="panel-heading">
+            <h1 class="panel-title"><%= nombre %></h1>
+        </div>
+        <div class="panel-body">
+            <div id="grafica"></div>
+        </div>
+    </script>
 
     <script src="./backbone.marionette/json2.js"></script>
     <script src="./backbone.marionette/jquery.js"></script>
@@ -683,6 +707,7 @@
     <script src="./js/Fernando.AutoBahn.js"></script>
     <script src="./js/Fernando.Nav.js"></script>
     <script src="./js/Fernando.Vivienda.js"></script>
+    <script src="./js/Fernando.Energia.js"></script>
     <script src="./js/Fernando.Domotica.js"></script>
     <script src="./js/Fernando.App.js"></script>
 </html>

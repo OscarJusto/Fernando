@@ -243,6 +243,35 @@ Fernando.module('Domotica', function (Domotica, Fernando, Backbone, Marionette, 
                     console.log('irEnergia', user, options);
                     if (user.get('name').length > 0) {
                         //// AQUI VA EL CODIGO
+                        user.fetch({
+                            success: function (model, resp, opts) {
+                                if (!Fernando.request('hasWamp')) {
+                                    Fernando.execute('connectWamp');
+                                }
+                                controller.showNavBar(model);
+                                var casa = new Fernando.Docs.Vivienda({nombre: 'Vivienda Demo', descripcion: 'Tipo Casa Habitación'});
+                                var ubicacion = casa.get('ubicacion', '');
+                                ubicacion.ciudad = "Xalapa, Ver.";
+                                ubicacion.calle = "San Lazaro";
+                                ubicacion.numero = "11";
+                                casa.set('ubicacion', ubicacion);
+                                var lin1 = new Fernando.Docs.LineaElectrica();
+                                lin1.set('nombre', 'Línea 1');
+                                var lin2 = new Fernando.Docs.LineaElectrica();
+                                lin2.set('nombre', 'Línea 2');
+                                var lin3 = new Fernando.Docs.LineaElectrica();
+                                lin3.set('nombre', 'Línea 3');
+                                var lin4 = new Fernando.Docs.LineaElectrica();
+                                lin4.set('nombre', 'Línea 4');
+                                var lineas = new Fernando.Docs.LineasElectricas();
+                                var monitoreo_vista = new Fernando.Vistas.MonitoreoLayout({model: casa, collection: lineas});
+                                lineas.reset([lin1, lin2, lin3, lin4]);
+                                Fernando.main.show(monitoreo_vista);
+                            },
+                            error: function (resp) {
+                                controller.loggedOut();
+                            }
+                        });
                         ////
                     } else {
                         controller.loggedOutContent();
