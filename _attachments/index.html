@@ -59,14 +59,12 @@
         <button class="btn btn-danger boton-salir" type="submit">Salir <span class="glyphicon glyphicon-user"></span></button>
     </script>
     <script id="template-nav-menu-admin" type="text/x-template">
-        <li><a href="#domotica">Domótica</a></li>
         <li><a href="#vivienda">Vivienda</a></li>
         <li><a href="#demanda">Demanda energética</a></li>
         <li><a href="#wsan">WSAN</a></li>
         <li><a href="#exergia">Exergía</a></li>
     </script>
     <script id="template-nav-menu" type="text/x-template">
-        <li<a href="#domotica">Domótica</a></li>
         <li><a href="#vivienda">Vivienda</a></li>
         <li><a href="#demanda">Demanda energética</a></li>
         <li><a href="#wsan">WSAN</a></li>
@@ -123,25 +121,67 @@
     <script id="template-admin-user-pill" type="text/x-template">
         <a href="#granjas/<%= _id %>"><%= nombre %></a>
     </script>
-    <script id="template-vivienda" type="text/x-template">
+    <script id="template-vivienda-layout" type="text/x-template">
         <div class="row">
-            <div class="col-md-3">
+            <div id="barra" class="col-sm-3">
+            </div>
+            <div id="contenido" class="col-sm-9">
+            </div>
+        </div>
+    </script>
+    <script id="template-vivienda-info" type="text/x-template">
+        <div class="panel-heading">
+            <div class="panel-title">
+                <%= nombre %>
+            </div>
+        </div>
+        <div class="panel-body">
+            <p><%= descripcion %></p>
+            <ul>Ubicacion
+                <li>Ciudad: <%= ubicacion.ciudad %></li>
+                <li>Calle: <%= ubicacion.calle %></li>
+                <li>Número: <%= ubicacion.numero %></li>
+            </ul>
+        </div>
+    </script>
+    <script id="template-habitacion-info" type="text/x-template">
+        <div class="panel-heading">
+            <h6 class="panel-title"><%= nombre %></h6>
+        </div>
+        <div class="panel-body">
+            <div class="col-xs-6">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <div class="panel-title">
-                        Vivienda
-                        </div>
+                        Temperatura
                     </div>
                     <div class="panel-body">
-                        <p><%= descripcion %></p>
-                        <ul>Ubicacion
-                            <li></li>
-                            <li>Ciudad: <%= ubicacion.ciudad %></li>
-                            <li>Calle: <%= ubicacion.calle %></li>
-                            <li>Número: <%= ubicacion.numero %></li>
-                        </ul>
+                        Dato
                     </div>
                 </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Humedad
+                    </div>
+                    <div class="panel-body">
+                        Dato
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer">
+            <% _.each(categorias, function (el, idx, list) { %>
+                <span class="label label-success"><%= el %></span>
+            <% }) %>
+        </div>
+    </script>
+    <script id="template-habitaciones" type="text/x-template">
+        <div class="panel-heading">
+            <h3 class="panel-title"><%= nombre %></h3>
+        </div>
+        <div class="panel-body">
+            <div id="lista-habitaciones" class="panel-group">
             </div>
         </div>
     </script>
@@ -466,6 +506,7 @@
     <script src="./js/Fernando.BaseDocs.js"></script>
     <script src="./js/Fernando.AutoBahn.js"></script>
     <script src="./js/Fernando.Nav.js"></script>
+    <script src="./js/Fernando.Vivienda.js"></script>
     <script src="./js/Fernando.Domotica.js"></script>
     <script src="./js/Fernando.App.js"></script>
 </html>

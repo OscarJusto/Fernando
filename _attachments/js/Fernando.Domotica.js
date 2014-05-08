@@ -3,24 +3,6 @@
 
 Fernando.module('Docs', function (Docs, Fernando, Backbone, Marionette, $, _) {
 
-    Docs.Vivienda = Backbone.Model.extend({
-        defaults: {
-            "tipo": "vivienda",
-            "nombre": "Vivienda",
-            "descripcion": "Casa habitación o departamento",
-            "ubicacion": {"ciudad": "", "calle": "", "numero": ""}
-        }
-    });
-
-    Docs.Habitacion = Backbone.Model.extend({
-        defaults: {
-            "tipo": "habitacion",
-            "nombre": "Habitación",
-            "vivienda_id": "Justo",
-            "categoria": ["Sala"]
-        }
-    });
-
     Docs.WSAN = Backbone.Model.extend({
         defaults: {
             "tipo": "ZigBee",
@@ -51,18 +33,6 @@ Fernando.module('Docs', function (Docs, Fernando, Backbone, Marionette, $, _) {
 
 Fernando.module('Vistas', function (Vistas, Fernando, Backbone, Marionette, $, _) {
 
-    
-    
-    Vistas.Vivienda = Marionette.ItemView.extend({
-        template: "#template-vivienda",
-        model: Fernando.Docs.Vivienda
-    });
-
-    Vistas.Habitacion = Marionette.ItemView.extend({
-    template: "#template-habitacion",
-        model: Fernando.Docs.Habitacion
-    });
-
     Vistas.WSAN = Marionette.ItemView.extend({
         template: "#template-wsan",
         model: Fernando.Docs.WSAN,
@@ -73,7 +43,7 @@ Fernando.module('Vistas', function (Vistas, Fernando, Backbone, Marionette, $, _
         },
         onRender: function () {
             var controlador = this;
-            console.log('WSAN!!!!!!!!!!!!!!!');
+            //console.log('WSAN!!!!!!!!!!!!!!!');
             function habitacionUno (topic, evento) {
                 var titulo = controlador.ui.hab1.find('>.panel-heading');
                 //console.log('Título HAB 1', titulo.text().trim(), evento.msg);
@@ -110,12 +80,12 @@ Fernando.module('Vistas', function (Vistas, Fernando, Backbone, Marionette, $, _
                 this.listenTo(Fernando.vent, 'wamp:success', function () {
                     Fernando.execute('subscribeNode', '0013a20040ad6568', habitacionUno);
                     Fernando.execute('subscribeNode', '0013a20040b13749', habitacionDos);
-                    //Fernando.execute('subscribeNode', '0013a20040b136bc', habitacionTres);
+                    Fernando.execute('subscribeNode', '0013a20040b136bc', habitacionTres);
                 });
             } else {
                 Fernando.execute('subscribeNode', '0013a20040ad6568', habitacionUno);
-                //Fernando.execute('subscribeNode', '0013a20040b13749', habitacionDos);
-                //Fernando.execute('subscribeNode', '0013a20040b136bc', habitacionTres);
+                Fernando.execute('subscribeNode', '0013a20040b13749', habitacionDos);
+                Fernando.execute('subscribeNode', '0013a20040b136bc', habitacionTres);
             }
         },
         onClose: function () {
@@ -136,9 +106,9 @@ Fernando.module('Domotica', function (Domotica, Fernando, Backbone, Marionette, 
 
     Domotica.Rutas = Marionette.AppRouter.extend({
         appRoutes: {
-            "": "irDomotica",
-            "domotica": "irDomotica",
+            "": "irVivienda",
             "vivienda": "irVivienda",
+            "domotica": "irDomotica",
             "exergia": "irExergia",
             "demanda": "irDemanda",
             "wsan": "irWSAN"
@@ -314,7 +284,7 @@ Fernando.module('Domotica', function (Domotica, Fernando, Backbone, Marionette, 
             this.showApp({
                 success: function (resp, options) {
                     var user = controller.getUser(resp);
-                    console.log('irVivienda success', user, options);
+                    //console.log('irVivienda success', user, options);
                     if (user.get('name').length > 0) {
                         //// AQUI VA EL CODIGO
                         user.fetch({
@@ -323,13 +293,22 @@ Fernando.module('Domotica', function (Domotica, Fernando, Backbone, Marionette, 
                                     Fernando.execute('connectWamp');
                                 }
                                 controller.showNavBar(model);
-                                var casa = new Fernando.Docs.Vivienda({nombre: 'Vivienda', descripcion: 'Tipo Casa Habitación'});
+                                var casa = new Fernando.Docs.Vivienda({nombre: 'Vivienda Demo', descripcion: 'Tipo Casa Habitación'});
                                 var ubicacion = casa.get('ubicacion', '');
                                 ubicacion.ciudad = "Xalapa, Ver.";
                                 ubicacion.calle = "San Lazaro";
                                 ubicacion.numero = "11";
                                 casa.set('ubicacion', ubicacion);
-                                var casa_vista = new Fernando.Vistas.Vivienda({model: casa});
+                                var hab1 = new Fernando.Docs.Habitacion();
+                                hab1.set('nombre', 'Habitación 1');
+                                var hab2 = new Fernando.Docs.Habitacion();
+                                hab2.set('nombre', 'Habitación 2');
+                                var hab3 = new Fernando.Docs.Habitacion();
+                                hab3.set('nombre', 'Habitación 3');
+                                hab3.set('categorias', ['Cocina', 'Comedor']);
+                                var habitaciones = new Fernando.Docs.Habitaciones();
+                                var casa_vista = new Fernando.Vistas.ViviendaLayout({model: casa, collection: habitaciones});
+                                habitaciones.reset([hab1, hab2, hab3]);
                                 Fernando.main.show(casa_vista);
                             },
                             error: function (resp) {
@@ -390,7 +369,7 @@ Fernando.module('Domotica', function (Domotica, Fernando, Backbone, Marionette, 
                                 }
                                 controller.showNavBar(model);
                                 var casa = new Fernando.Docs.Vivienda({nombre: 'Mi casa'});
-                                var casa_vista = new Fernando.Vistas.Vivienda({model: casa});
+                                var casa_vista = new Fernando.Vistas.ViviendaInfo({model: casa});
                                 Fernando.main.show(casa_vista);
                             },
                             error: function (resp) {
