@@ -108,9 +108,8 @@ Fernando.module('Domotica', function (Domotica, Fernando, Backbone, Marionette, 
         appRoutes: {
             "": "irVivienda",
             "vivienda": "irVivienda",
-            "domotica": "irDomotica",
             "exergia": "irExergia",
-            "demanda": "irDemanda",
+            "energia": "irEnergia",
             "wsan": "irWSAN"
         }
     });
@@ -192,7 +191,7 @@ Fernando.module('Domotica', function (Domotica, Fernando, Backbone, Marionette, 
                 usr.fetch({
                     success: function (model, resp, opts) {
                         Fernando.CurrentUser = model;
-                        controller.irDomotica();
+                        controller.irVivienda();
                     },
                     error: function (resp) {
                         Fernando.CurrentUser = null;
@@ -235,40 +234,13 @@ Fernando.module('Domotica', function (Domotica, Fernando, Backbone, Marionette, 
                 success: success_callback,
                 error: error_callback
             });
-        },       
-        irDomotica: function (eid) {
-            var controller = this;
-            this.showApp({
-                success: function (resp, options) {
-                    var user = controller.getUser(resp);
-                    console.log('irWSAN success', user, options);
-                    if (user.get('name').length > 0) {
-                         user.fetch({
-                            success: function (model, resp, opts) {
-                                if (!Fernando.request('hasWamp')) {
-                                    Fernando.execute('connectWamp');
-                                }
-                                controller.showNavBar(model);
-                                Fernando.main.close();
-                                //Fernando.main.show(vista);
-                            },
-                            error: function (resp) {
-                                controller.loggedOut();
-                            }
-                        });
-                    } else {
-                        controller.loggedOutContent();
-                    }
-                    controller.showNavBar(user);
-                }
-            });
         },
-        irDemanda: function (eid) {
+        irEnergia: function (eid) {
             var controller = this;
             this.showApp({
                 success: function (resp, options) {
                     var user = controller.getUser(resp);
-                    console.log('irWSAN success', user, options);
+                    console.log('irEnergia', user, options);
                     if (user.get('name').length > 0) {
                         //// AQUI VA EL CODIGO
                         ////
@@ -356,11 +328,11 @@ Fernando.module('Domotica', function (Domotica, Fernando, Backbone, Marionette, 
         },
         irExergia: function (eid) {
             var controller = this;
-            console.log('irDomotica', eid);
+            console.log('irExergia', eid);
             this.showApp({
                 success: function (resp, options) {
                     var user = controller.getUser(resp);
-                    console.log('irDomotica success', user, options);
+                    console.log('irExergia success', user, options);
                     if (user.get('name').length > 0) {
                         user.fetch({
                             success: function (model, resp, opts) {
