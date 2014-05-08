@@ -12,3 +12,5 @@
 #nav-registro-form th,
 #nav-registro-form input {font-size: 12px;}
 #nav-registro-form .form-control {padding: 5px 5px;}
+#panel-grafica .panel-body {overflow: auto;}
+#panel-grafica svg {margin: 0 auto;}

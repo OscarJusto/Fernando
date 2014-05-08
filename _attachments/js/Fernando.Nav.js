@@ -26,17 +26,17 @@ Fernando.module('Vistas', function (Vistas, Fernando, Backbone, Marionette, $, _
             this.render();
         },
         setUser: function (model, resp, options) {
-            console.log('username synced', resp);
+            //console.log('username synced', resp);
             this.model = model;
             this.render();
         },
         nameChanged: function (model, value, options) {
-            console.log('username changed', value);
+            //console.log('username changed', value);
             model.setIdFromName(value);
             model.fetch();
         },
         onRender: function () {
-            console.log('navbar model', this.model);
+            //console.log('navbar model', this.model);
             if (this.userName()) {
                 this.showLoggedIn(this.model);
             } else {
@@ -96,7 +96,7 @@ Fernando.module('Vistas', function (Vistas, Fernando, Backbone, Marionette, $, _
             },
             'click @ui.sensores': function (e) {
                 Fernando.execute('getSensors', function (r) {
-                    console.log('getSensors', r);
+                    //console.log('getSensors', r);
                     Fernando.main.currentView.side.currentView.$el.text(JSON.stringify(r));
                 });
             }
