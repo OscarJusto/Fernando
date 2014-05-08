@@ -18,17 +18,17 @@ Fernando.module('AutoBahn', function (AutoBahn, Fernando, Backbone, Marionette, 
 
     function onHangup(code, reason, detail) {
         var log_line = "AutoBahn Connection failed";
-        ab.log(log_line, code, reason, detail);
+        //ab.log(log_line, code, reason, detail);
         sess = null;
         Fernando.vent.trigger('wamp:failure');
     }
 
     function userLogin (user, pwd) {
-        ab.log("User login", user);
+        //ab.log("User login", user);
         sess.authreq(user).then(function (challenge) {
             var secret = ab.deriveKey(pwd, JSON.parse(challenge).authextra);
             //var secret = pwd;
-            ab.log("User login secret", secret);
+            //ab.log("User login secret", secret);
             var signature = sess.authsign(challenge, secret);
             ab.log("User login signature", signature);
 
@@ -37,7 +37,7 @@ Fernando.module('AutoBahn', function (AutoBahn, Fernando, Backbone, Marionette, 
     }
 
     function anonLogin () {
-        ab.log("Anonymous login");
+        //ab.log("Anonymous login");
         sess.authreq().then(function () {
             sess.auth().then(onAuth, ab.log);
         }, ab.log);
@@ -48,7 +48,7 @@ Fernando.module('AutoBahn', function (AutoBahn, Fernando, Backbone, Marionette, 
     }
 
     function doLogout (resp) {
-        ab.log('logging out', resp);
+        //ab.log('logging out', resp);
         if (resp.ok) {
             Fernando.vent.trigger('granjas:loggedOut', resp);
         } else {

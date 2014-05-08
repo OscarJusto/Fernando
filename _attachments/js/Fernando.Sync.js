@@ -3,11 +3,11 @@
 
 Fernando.module('Sync', function (Sync, Fernando, Backbone, Marionette, $, _) {
     Sync.create = function (model, options) {
-        console.log('Sync.create', model);
+        //console.log('Sync.create', model);
         return $.couch.userDb(function (db) {
             db.saveDoc(model, {
                 success: function (data) {
-                    console.log('model saved', JSON.stringify(data));
+                    //console.log('model saved', JSON.stringify(data));
                     if (data.ok) {
                         model.set('_id', data.id);
                         model.set('_rev', data.rev);
@@ -18,16 +18,16 @@ Fernando.module('Sync', function (Sync, Fernando, Backbone, Marionette, $, _) {
     };
 
     Sync.update = function (model, options) {
-        console.log('Sync.update->create');
+        //console.log('Sync.update->create');
         Sync.create(model, success, error);
     };
 
     Sync.destroy = function (model, options) {
-        console.log('Sync.delete');
+        //console.log('Sync.delete');
     };
 
     Sync.find = function (model, options) {
-        console.log('Sync.find');
+        //console.log('Sync.find');
         if (!model.id) {
             throw new Error("The model has no id property, so it can't get fetched from the database");
         }
@@ -52,7 +52,7 @@ Fernando.module('Sync', function (Sync, Fernando, Backbone, Marionette, $, _) {
     };
 
     Sync.findAll = function (model, options) {
-        console.log('Sync.findAll');
+        //console.log('Sync.findAll');
         var UserS;
         $.couch.userDb(function (db) {
             function current_user (doc) {
