@@ -40,14 +40,12 @@ Fernando.module('Vistas', function (Vistas, Fernando, Backbone, Marionette, $, _
 
     Vistas.HabitacionInfo = Marionette.ItemView.extend({
         template: "#template-habitacion-info",
-        className: "panel panel-info",
+        className: "panel panel-primary",
         model: Fernando.Docs.Habitacion
     });
 
-    Vistas.HabitacionGas = Marionette.ItemView.extend({
-        template: "#template-habitacion-gas",
-        className: "panel panel-info",
-        model: Fernando.Docs.Habitacion
+    Vistas.HabitacionGas = Vistas.HabitacionInfo.extend({
+        template: "#template-habitacion-gas"
     });
 
     Vistas.Habitaciones = Marionette.CompositeView.extend({

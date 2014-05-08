@@ -149,23 +149,72 @@
             <h6 class="panel-title"><%= nombre %></h6>
         </div>
         <div class="panel-body">
-            <div class="col-xs-6">
-                <div class="panel panel-default">
+            <div class="panel-group">
+                <div class="panel panel-success">
                     <div class="panel-heading">
-                        Temperatura
+                        <h3 class="panel-title">Sensores</h3>
                     </div>
                     <div class="panel-body">
-                        Dato
+                        <div class="col-sm-6">
+                            <div class="panel panel-info">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Temperatura</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <table class="table table-bordered">
+                                        <tr>
+                                            <td class="text-right">-.-</td>
+                                            <td>°C</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="panel panel-info">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Humedad relativa</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <table class="table table-bordered">
+                                        <tr>
+                                            <td class="text-right">-.-</td>
+                                            <td>%</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-xs-6">
-                <div class="panel panel-default">
+                <div class="panel panel-success">
                     <div class="panel-heading">
-                        Humedad
+                        <h3 class="panel-title">Controles</h3>
                     </div>
                     <div class="panel-body">
-                        Dato
+                        <table class="table table-bordered text-center">
+                            <tr>
+                                <th></th>
+                                <th>Estado</th>
+                                <th></th>
+                            </tr>
+                            <tr>
+                                <td>Iluminación</td>
+                                <td class="text-success">Encendido</td>
+                                <td>
+                                    <button type="button" class="btn-encender btn btn-default btn-xs">Encender</button>
+                                    <button type="button" class="btn-apagar btn btn-default btn-xs">Apagar</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Clima</td>
+                                <td class="text-danger">Apagado</td>
+                                <td>
+                                    <button type="button" class="btn-encender btn btn-default btn-xs">Encender</button>
+                                    <button type="button" class="btn-apagar btn btn-default btn-xs">Apagar</button>
+                                </td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -181,47 +230,117 @@
             <h6 class="panel-title"><%= nombre %></h6>
         </div>
         <div class="panel-body">
-            <div class="col-sm-6">
-                <div class="panel panel-default">
+            <div class="panel-group">
+                <div class="panel panel-success">
                     <div class="panel-heading">
-                        Temperatura
+                        <h3 class="panel-title">Sensores</h3>
                     </div>
                     <div class="panel-body">
-                        Dato
+                        <div class="col-sm-6">
+                            <div class="panel panel-info">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Temperatura</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <table class="table table-bordered">
+                                        <tr>
+                                            <td class="text-right">-.-</td>
+                                            <td>°C</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="panel panel-info">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Humedad relativa</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <table class="table table-bordered">
+                                        <tr>
+                                            <td class="text-right">-.-</td>
+                                            <td>%</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="panel panel-info">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Gas LP</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <table class="table table-bordered">
+                                        <tr>
+                                            <td class="text-right">-.-</td>
+                                            <td>p.p.m.</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="panel panel-info">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Humo</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <table class="table table-bordered">
+                                        <tr>
+                                            <td class="text-right">-.-</td>
+                                            <td>p.p.m.</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="panel panel-info">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Monóxido de carbono (CO)</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <table class="table table-bordered">
+                                        <tr>
+                                            <td class="text-right">-.-</td>
+                                            <td>p.p.m.</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="panel panel-default">
+                <div class="panel panel-success">
                     <div class="panel-heading">
-                        Gas LP
+                        <h3 class="panel-title">Controles</h3>
                     </div>
                     <div class="panel-body">
-                        Dato
-                    </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        Humo
-                    </div>
-                    <div class="panel-body">
-                        Dato
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Humedad</h3>
-                    </div>
-                    <div class="panel-body">
-                        Dato
-                    </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">CO</h3>
-                    </div>
-                    <div class="panel-body">
-                        Dato
+                        <table class="table table-bordered text-center">
+                            <tr>
+                                <th></th>
+                                <th>Estado</th>
+                                <th></th>
+                            </tr>
+                            <tr>
+                                <td>Iluminación</td>
+                                <td class="text-success">Encendido</td>
+                                <td>
+                                    <button type="button" class="btn-encender btn btn-default btn-xs">Encender</button>
+                                    <button type="button" class="btn-apagar btn btn-default btn-xs">Apagar</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Clima</td>
+                                <td class="text-danger">Apagado</td>
+                                <td>
+                                    <button type="button" class="btn-encender btn btn-default btn-xs">Encender</button>
+                                    <button type="button" class="btn-apagar btn btn-default btn-xs">Apagar</button>
+                                </td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
             </div>
