@@ -17,10 +17,13 @@ El sistema recibe datos de una estación base utilizando un Raspberry Pi que act
 
 Los modulos de sensores tienen como identificador la dirección baja de cada Xbee:
 
-Habitación 1 (Sala):	40AD6568\\.
-Habitación 2 (Cuarto):	40B13749\\.
-Habitación 3 (Cocina):	40B136BC\\.
-Energía eléctrica:	40B13727\\.
+Habitación 1 (Sala):	40AD6568
+
+Habitación 2 (Cuarto):	40B13749
+
+Habitación 3 (Cocina):	40B136BC
+
+Energía eléctrica:	40B13727
 
 
 La manera en la cual son recibidos los datos de los sensores son:
