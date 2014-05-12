@@ -15,10 +15,18 @@ Manejo de datos
 
 El sistema recibe datos de una estación base utilizando un Raspberry Pi que actua como Gateway, el cual a su vez recibe los datos de los sensores conectados a un Arduino utilizando el protocolo ZigBee.
 
+Los modulos de sensores tienen como identificador la dirección baja de cada Xbee:
+
+Habitación 1 (Sala):	40AD6568
+Habitación 2 (Cuarto):	40B13749
+Habitación 3 (Cocina):	40B136BC
+Energía eléctrica:	40B13727
+
+
 La manera en la cual son recibidos los datos de los sensores son:
 
-	Modulos Sala y Habitación
-	-------------------------
+	Modulos Habitaciones
+	
 
 a) Estados:111111
 
@@ -50,20 +58,28 @@ c) Humedad:00.00
 Esta representada en porcentaje.
 
 	Modulo Cocina
-	-------------
+	
 
 a) Estados:111111
+
 b) Temperatura:00.00
+
 c) Humedad:00.00
+
 d) LPG:00.00 	
+
 Indica la proporción en partes por millon de Gas LP.
+
 e) CO:00.00  
+
 Indica la proporción en partes por millon de CO, Monoxido de Carbono.
+
 f) HUMO:00.00 
+
 Indica la proporción en partes por millon de humo.
 
 	Modulo Potencia
-	---------------
+	
 
 a) CG:00:00
 
